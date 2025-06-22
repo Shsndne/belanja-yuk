@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BelanjaYuk</title>
+  <link rel="icon" href="imgs/shopping.png" />
+
+  <style>
+    :root {
+      --hijau: #0E4839;
+      --putih: #FDFCE7;
+      --brightSun: #fcdb32;
+      --button-bg: var(--putih);
+      --button-text: var(--hijau);
+      --text-color: var(--hijau);
+    }
+
+    body {
+      font-family: 'Clash Grotesk', sans-serif;
+      background-color: var(--hijau);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      color: var(--text-color);
+    }
+
+    .phone {
+      background-color: var(--putih);
+      width: 100%;
+      max-width: 900px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      overflow: hidden;
+      padding: 25px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 0;
+      color: var(--hijau);
+      margin-bottom: 25px;
+    }
+
+    .shopping-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .shopping-table th {
+      background-color: var(--hijau);
+      color: var(--putih);
+      padding: 12px 15px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .shopping-table td {
+      padding: 12px 15px;
+      border-bottom: 1px solid rgba(14, 72, 57, 0.1);
+      vertical-align: middle;
+    }
+
+    .shopping-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .shopping-table tr:hover {
+      background-color: rgba(252, 219, 50, 0.1);
+    }
+
+    .item-checkbox {
+      transform: scale(1.2);
+      accent-color: var(--hijau);
+    }
+
+    .item-name {
+      font-weight: 500;
+    }
+
+    .item-price {
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .original-price {
+      text-decoration: line-through;
+      color: #888;
+      font-size: 0.9em;
+      margin-right: 5px;
+    }
+
+    .diskon-badge {
+      background-color: var(--hijau);
+      color: var(--putih);
+      padding: 3px 8px;
+      font-size: 12px;
+      border-radius: 4px;
+      margin-left: 8px;
+      display: inline-block;
+    }
+
+    .diskon-percent {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+
+    .delete-btn {
+      background: transparent;
+      border: none;
+      color: rgba(14, 72, 57, 0.6);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 5px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+
+    .delete-btn:hover {
+      color: #ff6b6b;
+      background-color: rgba(255, 107, 107, 0.1);
+    }
+
+    .delete-btn:active {
+      transform: scale(0.9);
+    }
+
+    .summary-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .summary-box {
+      background-color: rgba(252, 219, 50, 0.2);
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .summary-label {
+      font-size: 14px;
+      color: var(--hijau);
+      margin-bottom: 5px;
+    }
+
+    .summary-value {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--hijau);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      margin-top: 20px;
+      border-top: 2px solid rgba(14, 72, 57, 0.2);
+    }
+
+    .budget {
+      background-color: var(--brightSun);
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-weight: bold;
+      color: var(--hijau);
+      font-size: 18px;
+    }
+
+    .done-btn {
+      background-color: var(--hijau);
+      color: var(--putih);
+      padding: 12px 25px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      font-size: 16px;
+    }
+
+    .done-btn:hover {
+      background-color: #0a362a;
+      transform: translateY(-2px);
+    }
+
+    .form-add {
+      margin-top: 30px;
+      border-top: 2px solid rgba(14, 72, 57, 0.2);
+      padding-top: 20px;
+    }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.form-group {
+  margin-bottom: 25px; /* dari 15px ke 25px */
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    .form-add label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--hijau);
+    }
+
+    .form-add input,
+    .form-add select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(14, 72, 57, 0.3);
+      border-radius: 8px;
+      background-color: rgba(253, 252, 231, 0.5);
+      color: var(--hijau);
+      font-family: inherit;
+    }
+
+    .form-add input::placeholder {
+      color: rgba(14, 72, 57, 0.5);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #itemDiskon {
+      width: auto;
+      transform: scale(1.3);
+      accent-color: var(--hijau);
+    }
+
+    #diskonPercent {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(14, 72, 57, 0.3);
+      border-radius: 8px;
+      background-color: rgba(253, 252, 231, 0.5);
+      color: var(--hijau);
+      font-family: inherit;
+      display: none;
+    }
+
+    .add-btn {
+      grid-column: span 2;
+      width: 100%;
+      padding: 14px;
+      background-color: var(--hijau);
+      color: var(--putih);
+      border: none;
+      border-radius: 8px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      font-size: 16px;
+    }
+
+    .add-btn:hover {
+      background-color: #0a362a;
+    }
+
+    @media (max-width: 600px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-group.full-width {
+        grid-column: span 1;
+      }
+      
+      .add-btn {
+        grid-column: span 1;
+      }
+      
+      .shopping-table {
+        display: block;
+        overflow-x: auto;
+      }
+      
+      .summary-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <h2>Daftar Belanja BelanjaYuk</h2>
+
+    <div class="summary-container">
+      <div class="summary-box">
+        <div class="summary-label">Total Belanja</div>
+        <div class="summary-value" id="totalBelanja">Rp0</div>
+      </div>
+      <div class="summary-box">
+        <div class="summary-label">Total Diskon</div>
+        <div class="summary-value" id="totalDiskon">Rp0</div>
+      </div>
+      <div class="summary-box">
+        <div class="summary-label">Total Akhir</div>
+        <div class="summary-value" id="totalAkhir">Rp0</div>
+      </div>
+    </div>
+
+    <table class="shopping-table">
+      <thead>
+        <tr>
+          <th width="50px"></th>
+          <th>Nama Barang</th>
+          <th>Kategori</th>
+          <th>Harga</th>
+          <th width="50px"></th>
+        </tr>
+      </thead>
+      <tbody id="list-container">
+        <!-- Items will be inserted here by JavaScript -->
+      </tbody>
+    </table>
+
+    <div class="footer">
+      <div class="budget" id="totalBudget">Total: Rp0</div>
+      <button class="done-btn">Selesai Belanja</button>
+    </div>
+
+    <!-- Form Tambah Barang -->
+    <div class="form-add">
+      <h4>Tambah Barang Baru</h4>
+      <div class="form-grid">
+        <div class="form-group full-width">
+          <label for="itemName">Nama Barang</label>
+          <input type="text" id="itemName" placeholder="Contoh: Beras, Telur, Minyak Goreng" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="itemPrice">Harga Normal (Rp)</label>
+          <input type="number" id="itemPrice" placeholder="Contoh: 15000" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="itemCategory">Kategori</label>
+          <select id="itemCategory">
+            <option value="Bahan Pokok">Bahan Pokok</option>
+            <option value="Buah & Sayur">Buah & Sayur</option>
+            <option value="Snack">Snack</option>
+            <option value="Bahan Dapur">Bahan Dapur</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="itemDiskon">
+            <label for="itemDiskon">Sedang Diskon</label>
+          </div>
+          <input type="number" id="diskonPercent" placeholder="Persentase diskon (10-90)" min="10" max="90">
+        </div>
+        
+        <button class="add-btn" onclick="tambahBarang()">Tambah ke Daftar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "belanjaYukShoppingListTable";
+    const DISKON_PERCENT = 20; // Default diskon 20%
+
+    // Load dari LocalStorage atau data awal
+    let data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+      "Bahan Pokok": [
+        { name: "Beras", price: 12500, diskon: false },
+        { name: "Minyak Goreng", price: 18000, diskon: true, diskonPercent: 20, originalPrice: 22500 },
+        { name: "Telur", price: 28000, diskon: false }
+      ],
+      "Buah & Sayur": [
+        { name: "Apel", price: 35000, diskon: false },
+        { name: "Jeruk", price: 20000, diskon: true, diskonPercent: 25, originalPrice: 25000 },
+        { name: "Wortel", price: 8000, diskon: false }
+      ]
+    };
+
+    const container = document.getElementById("list-container");
+    const totalBudget = document.getElementById("totalBudget");
+    const totalBelanja = document.getElementById("totalBelanja");
+    const totalDiskon = document.getElementById("totalDiskon");
+    const totalAkhir = document.getElementById("totalAkhir");
+    const diskonPercentInput = document.getElementById("diskonPercent");
+
+    // Tampilkan input persentase diskon saat checkbox dicentang
+    document.getElementById("itemDiskon").addEventListener("change", function() {
+      diskonPercentInput.style.display = this.checked ? "block" : "none";
+      if (this.checked) {
+        diskonPercentInput.value = DISKON_PERCENT;
+      }
+    });
+
+    function simpanKeLocalStorage() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function formatRupiah(angka) {
+      return 'Rp' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function hitungHargaDiskon(originalPrice, diskonPercent) {
+      return Math.round(originalPrice * (100 - diskonPercent) / 100);
+    }
+
+    function renderList() {
+      container.innerHTML = "";
+      
+      let grandTotal = 0;
+      let totalDiskonAmount = 0;
+      
+      for (const category in data) {
+        data[category].forEach((item, index) => {
+          const row = document.createElement("tr");
+          
+          // Checkbox
+          const tdCheckbox = document.createElement("td");
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.className = "item-checkbox";
+          checkbox.dataset.price = item.price;
+          checkbox.addEventListener("change", updateBudget);
+          tdCheckbox.appendChild(checkbox);
+          row.appendChild(tdCheckbox);
+          
+          // Nama Barang
+          const tdName = document.createElement("td");
+          tdName.className = "item-name";
+          const nameSpan = document.createElement("span");
+          nameSpan.textContent = item.name;
+          tdName.appendChild(nameSpan);
+          
+          if (item.diskon) {
+            const badge = document.createElement("span");
+            badge.className = "diskon-badge";
+            badge.textContent = `${item.diskonPercent}% Diskon`;
+            tdName.appendChild(badge);
+          }
+          
+          row.appendChild(tdName);
+          
+          // Kategori
+          const tdCategory = document.createElement("td");
+          tdCategory.textContent = category;
+          row.appendChild(tdCategory);
+          
+          // Harga
+          const tdPrice = document.createElement("td");
+          tdPrice.className = "item-price";
+          
+          if (item.diskon) {
+            const originalPriceSpan = document.createElement("span");
+            originalPriceSpan.className = "original-price";
+            originalPriceSpan.textContent = formatRupiah(item.originalPrice);
+            tdPrice.appendChild(originalPriceSpan);
+            
+            const diskonPriceSpan = document.createElement("span");
+            diskonPriceSpan.textContent = formatRupiah(item.price);
+            tdPrice.appendChild(diskonPriceSpan);
+            
+            // Hitung total diskon untuk summary
+            totalDiskonAmount += (item.originalPrice - item.price);
+          } else {
+            tdPrice.textContent = formatRupiah(item.price);
+          }
+          
+          row.appendChild(tdPrice);
+          
+          // Delete Button
+          const tdDelete = document.createElement("td");
+          const deleteBtn = document.createElement("button");
+          deleteBtn.className = "delete-btn";
+          deleteBtn.innerHTML = "✕";
+          deleteBtn.title = "Hapus item";
+          deleteBtn.onclick = () => {
+            data[category].splice(index, 1);
+            simpanKeLocalStorage();
+            renderList();
+          };
+          tdDelete.appendChild(deleteBtn);
+          row.appendChild(tdDelete);
+          
+          container.appendChild(row);
+          
+          // Hitung grand total
+          grandTotal += item.price;
+        });
+      }
+      
+      // Update summary
+      totalBelanja.textContent = formatRupiah(grandTotal + totalDiskonAmount);
+      totalDiskon.textContent = formatRupiah(totalDiskonAmount);
+      totalAkhir.textContent = formatRupiah(grandTotal);
+      
+      updateBudget();
+    }
+
+    function updateBudget() {
+      let total = 0;
+      document.querySelectorAll(".item-checkbox").forEach(cb => {
+        if (cb.checked) {
+          total += parseFloat(cb.dataset.price);
+        }
+      });
+      totalBudget.textContent = `Total: ${formatRupiah(total)}`;
+    }
+
+    function tambahBarang() {
+      const name = document.getElementById("itemName").value.trim();
+      const priceInput = parseFloat(document.getElementById("itemPrice").value);
+      const category = document.getElementById("itemCategory").value;
+      const isDiskon = document.getElementById("itemDiskon").checked;
+      const diskonPercent = isDiskon ? parseInt(diskonPercentInput.value) || DISKON_PERCENT : 0;
+      
+      if (name && priceInput > 0) {
+        if (!data[category]) {
+          data[category] = [];
+        }
+        
+        let itemData;
+        if (isDiskon) {
+          const hargaSetelahDiskon = hitungHargaDiskon(priceInput, diskonPercent);
+          itemData = { 
+            name, 
+            price: hargaSetelahDiskon,
+            diskon: true,
+            diskonPercent,
+            originalPrice: priceInput
+          };
+        } else {
+          itemData = { 
+            name, 
+            price: priceInput,
+            diskon: false
+          };
+        }
+        
+        data[category].push(itemData);
+        simpanKeLocalStorage();
+        
+        // Reset form
+        document.getElementById("itemName").value = "";
+        document.getElementById("itemPrice").value = "";
+        document.getElementById("itemDiskon").checked = false;
+        diskonPercentInput.style.display = "none";
+        diskonPercentInput.value = "";
+        
+        renderList();
+      } else {
+        alert("Mohon isi nama barang dan harga dengan benar!");
+      }
+    }
+
+    // Selesai belanja
+    document.querySelector(".done-btn").addEventListener("click", function() {
+      const checkedItems = document.querySelectorAll(".item-checkbox:checked");
+      if (checkedItems.length > 0) {
+        const total = Array.from(checkedItems).reduce((sum, cb) => sum + parseFloat(cb.dataset.price), 0);
+        alert(`Belanjaan selesai!\nTotal belanja: ${formatRupiah(total)}`);
+        
+        // Hapus item yang sudah dicentang
+        for (const category in data) {
+          data[category] = data[category].filter(item => {
+            return !Array.from(checkedItems).some(cb => {
+              return cb.closest("tr").querySelector(".item-name span").textContent === item.name;
+            });
+          });
+        }
+        
+        simpanKeLocalStorage();
+        renderList();
+      } else {
+        alert("Pilih setidaknya satu item untuk menyelesaikan belanja!");
+      }
+    });
+
+    renderList();
+  </script>
+</body>
+</html>

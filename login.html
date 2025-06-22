@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login BelanjaYuk</title>
+  <title>BelanjaYuk</title>
+  <link rel="icon" href="imgs/shopping.png" />
+
   <style>
     :root {
       --hijau: #0E4839;
@@ -161,8 +163,8 @@
 </head>
 <body>
   <div class="login-container">
-    <div class="icon-profile">B</div>
-    <h2>LOGIN BELANJAYUK</h2>
+  <img class="icon-profile" src="imgs/shopping-bag.png" alt="Profil">
+    <h2>LOGIN</h2>
     <p id="message">Input sudah benar! Silakan login</p>
     <p id="error-message">Username atau password salah</p>
 
@@ -178,7 +180,7 @@
       <button id="login-btn" class="shift-left">Login</button>
     </div>
 
-    <p class="signup-text">Belum punya akun? <a href="#">Daftar disini</a></p>
+    <p class="signup-text">Belum punya akun? <a href="#">yaudah login aja, belum bikin halamannya hehe, usn: cobain, pw: 12345</a></p>
   </div>
 
   <script>
@@ -246,7 +248,7 @@
         
         // Redirect ke halaman utama setelah 1 detik
         setTimeout(() => {
-          window.location.href = 'index.html';
+          window.location.href = 'note.html';
         }, 1000);
       } else {
         errorMsg.style.display = 'block';
@@ -265,7 +267,7 @@
 
     // Cek jika sudah login
     if (localStorage.getItem('isLoggedIn') === 'true') {
-      window.location.href = 'gpt1.html';
+      window.location.href = 'note.html';
     }
   </script>
 </body>
