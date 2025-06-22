@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BelanjaYuk</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/Shsndne/movie-project-js/refs/heads/main/cinema.png" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="./skrip.js" type="module" defer></script>
+
+</head>
+<style>
+    :root {
+  --hijau: #0E4839;
+  --putih: #FDFCE7;
+  
+  --honeyDrew: #edffec;
+  --lightGreen: #61e786;
+  --turquoise: #34e0a1;
+  --black: #000000;
+  --brightSun: #fcdb32;
+
+  --primary-orange: #f09319;
+  --secondary-yellow: #ffe31a;
+  --dark-green: #3d5300;
+  --gray-light: #f9fafb;
+  --gray-medium: #d1d5db;
+  --gray-dark: #374151;
+  --gray-text: #1f2937;
+  --gray-text-light: #4b5563;
+  --gray-text-lighter: #6b7280;
+
+  --button-bg: var(--putih);
+  --primary-color: #000;
+  --secondary-color: #222;
+  --accent-color: #ffd700;
+  --text-color: var(--putih);
+  --button-text: var(--hijau);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  color: var(--putih);
+  background-color: var(--hijau);
+  font-family: "Clash Grotesk", sans-serif;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+#gallery {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.image-wrapper {
+  position: absolute;
+  width: 240px;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  opacity: 0.5;
+}
+
+.hero-section > h1 {
+  font-size: 52px;
+  font-weight: 600;
+  text-align: center;
+}
+.hero-section > h1 > span {
+  background: linear-gradient(to right, #a18cd1, #fbc2eb);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* hero landing */
+.hero {
+  text-align: center; 
+  margin: 0 auto; 
+  max-width: 700px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.hero h1 { 
+  font-size: 36px; 
+  font-weight: 700; 
+  margin-bottom: 20px;
+}
+.hero span { color: var(--text-color); }
+.hero p { 
+  margin-bottom: 20px; 
+  font-size: 16px; 
+  color: var(--text-color);
+}
+    /* button dr sini */
+    .buttons { margin-top: 30px; }
+    .buttons button {
+      margin: 10px; padding: 10px 25px;
+      border: none; border-radius: 25px;
+      font-weight: 600; cursor: pointer;
+    }
+    .get-started {
+      background-color: var(--button-bg); color: var(--button-text);
+      border: 2px solid var(--button-bg); transition: all 0.2s ease-in-out;
+    }
+    .get-started:hover {
+      background-color: transparent;
+      border: 2px solid var(--text-color); color: var(--text-color);
+    }
+</style>
+<body>
+  <section class="hero" id="home">
+    <h1>Catat Semua Kebutuhanmu, Tanpa Ribet bersama <span>BelanjaYuk</span></h1>
+    <p>"Simpan dan kelola daftar belanja harianmu, lebih praktis, efisien, dan terorganisir. Kini kamu tidak perlu lagi mencatat manual atau khawatir ada barang yang terlupa—semua kebutuhanmu tercatat rapi dalam satu tempat yang mudah diakses kapan saja!</p>
+    <div class="buttons">
+    <button class="footer" onclick="window.location.href='login.html'">Ayo Coba</button>
+    <button class="footer" onclick="window.location.href='tentang-kami.html'">Tentang Kami</button>    </div>
+    <div id="gallery"></div>
+  </section>
+<!-- BAGIAN ABOUT -->
+ 
+  </section>
+</body>
+</html>

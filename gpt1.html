@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shopping List with Add + Delete + Save</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f7f5f2;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .phone {
+      background-color: white;
+      width: 360px;
+      border-radius: 30px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      overflow: hidden;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .category {
+      margin-top: 20px;
+    }
+
+    .category-title {
+      color: #888;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .item-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .item input[type="checkbox"] {
+      transform: scale(1.2);
+    }
+
+    .item-name {
+      font-size: 16px;
+    }
+
+    .item-price {
+      background-color: #ffe79d;
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .delete-btn {
+      background: none;
+      border: none;
+      color: red;
+      font-size: 18px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+    }
+
+    .budget {
+      background-color: #fcd970;
+      padding: 10px 14px;
+      border-radius: 50px;
+      font-weight: bold;
+    }
+
+    .done-btn {
+      background-color: #ccc;
+      padding: 10px 16px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .form-add {
+      margin-top: 30px;
+      border-top: 1px solid #ccc;
+      padding-top: 20px;
+    }
+
+    .form-add input,
+    .form-add select {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .form-add button {
+      width: 100%;
+      padding: 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .form-add button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <h2>🛒 Shopping List</h2>
+
+    <div id="list-container"></div>
+
+    <div class="footer">
+      <div class="budget" id="totalBudget">£0.00</div>
+      <button class="done-btn">Shopping Done</button>
+    </div>
+
+    <!-- Form Tambah Barang -->
+    <div class="form-add">
+      <h4>➕ Tambah Barang</h4>
+      <input type="text" id="itemName" placeholder="Nama Barang" required>
+      <input type="number" id="itemPrice" placeholder="Harga (£)" required>
+      <select id="itemCategory">
+        <option value="Dairy & Eggs">Dairy & Eggs</option>
+        <option value="Fruits & Vegetables">Fruits & Vegetables</option>
+      </select>
+      <button onclick="tambahBarang()">Tambah</button>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "shoppingListData";
+
+    // Load dari LocalStorage atau gunakan data awal
+    let data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+      "Dairy & Eggs": [
+        { name: "Oat milk", price: 2.00 },
+        { name: "Milk", price: 1.50 },
+        { name: "Eggs", price: 4.90 }
+      ],
+      "Fruits & Vegetables": [
+        { name: "Apple", price: 1.90 },
+        { name: "Kiwi", price: 2.50 },
+        { name: "Avocado", price: 0.90 },
+        { name: "Salad", price: 1.90 }
+      ]
+    };
+
+    const container = document.getElementById("list-container");
+    const totalBudget = document.getElementById("totalBudget");
+
+    function simpanKeLocalStorage() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function renderList() {
+      container.innerHTML = "";
+      for (const category in data) {
+        const div = document.createElement("div");
+        div.className = "category";
+
+        const title = document.createElement("div");
+        title.className = "category-title";
+        title.textContent = category;
+        div.appendChild(title);
+
+        data[category].forEach((item, index) => {
+          const itemDiv = document.createElement("div");
+          itemDiv.className = "item";
+
+          const left = document.createElement("div");
+          left.className = "item-left";
+
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.className = "check-item";
+          checkbox.dataset.price = item.price;
+          checkbox.addEventListener("change", updateBudget);
+
+          const nameSpan = document.createElement("span");
+          nameSpan.className = "item-name";
+          nameSpan.textContent = item.name;
+
+          left.appendChild(checkbox);
+          left.appendChild(nameSpan);
+
+          const priceDiv = document.createElement("div");
+          priceDiv.className = "item-price";
+          priceDiv.textContent = `£${item.price.toFixed(2)}`;
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.className = "delete-btn";
+          deleteBtn.innerHTML = "❌";
+          deleteBtn.onclick = () => {
+            data[category].splice(index, 1);
+            simpanKeLocalStorage();
+            renderList();
+          };
+
+          itemDiv.appendChild(left);
+          itemDiv.appendChild(priceDiv);
+          itemDiv.appendChild(deleteBtn);
+          div.appendChild(itemDiv);
+        });
+
+        container.appendChild(div);
+      }
+      updateBudget();
+    }
+
+    function updateBudget() {
+      let total = 0;
+      document.querySelectorAll(".check-item").forEach(cb => {
+        if (cb.checked) {
+          total += parseFloat(cb.dataset.price);
+        }
+      });
+      totalBudget.textContent = `£${total.toFixed(2)}`;
+    }
+
+    function tambahBarang() {
+      const name = document.getElementById("itemName").value.trim();
+      const price = parseFloat(document.getElementById("itemPrice").value);
+      const category = document.getElementById("itemCategory").value;
+
+      if (name && price > 0) {
+        data[category].push({ name, price });
+        simpanKeLocalStorage();
+        document.getElementById("itemName").value = "";
+        document.getElementById("itemPrice").value = "";
+        renderList();
+      }
+    }
+
+    renderList();
+  </script>
+</body>
+</html>

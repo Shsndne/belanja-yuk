@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login BelanjaYuk</title>
+  <style>
+    :root {
+      --hijau: #0E4839;
+      --putih: #FDFCE7;
+      --brightSun: #fcdb32;
+      --button-bg: var(--putih);
+      --button-text: var(--hijau);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Clash Grotesk", sans-serif;
+    }
+
+    body {
+      background: var(--hijau);
+      color: var(--putih);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: rgba(253, 252, 231, 0.1);
+      padding: 30px;
+      border-radius: 12px;
+      width: 300px;
+      text-align: center;
+      position: relative;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(253, 252, 231, 0.2);
+    }
+
+    .icon-profile {
+      background: var(--brightSun);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--hijau);
+      font-weight: bold;
+      font-size: 24px;
+    }
+
+    h2 {
+      margin: 10px 0;
+      color: var(--brightSun);
+    }
+
+    #message {
+      color: var(--brightSun);
+      font-size: 0.9em;
+      display: none;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      background: rgba(253, 252, 231, 0.1);
+      border: none;
+      color: var(--putih);
+      border-bottom: 1px solid var(--brightSun);
+    }
+
+    input::placeholder {
+      color: rgba(253, 252, 231, 0.7);
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8em;
+      margin: 10px 0;
+      color: var(--putih);
+    }
+
+    .options a {
+      color: var(--brightSun);
+      text-decoration: none;
+    }
+
+    .btn-container {
+      position: relative;
+      height: 60px;
+      margin-top: 20px;
+    }
+
+    #login-btn {
+      position: absolute;
+      padding: 10px 20px;
+      background: var(--brightSun);
+      color: var(--hijau);
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .shift-left {
+      left: 0;
+      top: 0;
+    }
+
+    .shift-right {
+      right: 0;
+      top: 0;
+    }
+
+    .shift-top {
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .shift-bottom {
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .signup-text {
+      font-size: 0.8em;
+      margin-top: 30px;
+      color: var(--putih);
+    }
+
+    .signup-text a {
+      color: var(--brightSun);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* Checkbox styling */
+    input[type="checkbox"] {
+      accent-color: var(--brightSun);
+      margin-right: 5px;
+    }
+
+    /* Error message */
+    #error-message {
+      color: #ff6b6b;
+      font-size: 0.8em;
+      margin-top: 5px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="icon-profile">B</div>
+    <h2>LOGIN BELANJAYUK</h2>
+    <p id="message">Input sudah benar! Silakan login</p>
+    <p id="error-message">Username atau password salah</p>
+
+    <input type="text" id="uname" placeholder="Username">
+    <input type="password" id="pass" placeholder="Password">
+
+    <div class="options">
+      <label><input type="checkbox"> Ingat saya</label>
+      <a href="#">Lupa Password?</a>
+    </div>
+
+    <div class="btn-container">
+      <button id="login-btn" class="shift-left">Login</button>
+    </div>
+
+    <p class="signup-text">Belum punya akun? <a href="#">Daftar disini</a></p>
+  </div>
+
+  <script>
+    const uname = document.querySelector('#uname');
+    const pass = document.querySelector('#pass');
+    const btn = document.querySelector('#login-btn');
+    const msg = document.querySelector('#message');
+    const errorMsg = document.querySelector('#error-message');
+
+    const positions = ['shift-left', 'shift-top', 'shift-right', 'shift-bottom'];
+
+    // Awal: disable tombol & posisi awal
+    btn.disabled = true;
+    btn.classList.add('shift-left');
+    msg.style.display = 'none';
+    errorMsg.style.display = 'none';
+
+    // Cek input: kalau sudah diisi, enable tombol
+    uname.addEventListener('input', checkInput);
+    pass.addEventListener('input', checkInput);
+
+    function checkInput() {
+      const isFilled = uname.value.trim() !== '' && pass.value.trim() !== '';
+
+      if (isFilled) {
+        btn.disabled = false;
+        msg.style.display = 'block';
+        errorMsg.style.display = 'none';
+        btn.classList.remove(...positions);
+        btn.style.position = 'static';
+      } else {
+        btn.disabled = true;
+        msg.style.display = 'none';
+        btn.style.position = 'absolute';
+        if (!positions.some(p => btn.classList.contains(p))) {
+          btn.classList.add('shift-left'); // pastikan punya posisi awal
+        }
+      }
+    }
+
+    // Saat mouse mendekat, tombol kabur kalau input belum diisi
+    btn.addEventListener('mouseenter', () => {
+      const isFilled = uname.value.trim() !== '' && pass.value.trim() !== '';
+      if (!isFilled) {
+        shiftButton();
+      }
+    });
+
+    function shiftButton() {
+      const currentPosition = positions.find(p => btn.classList.contains(p)) || 'shift-left';
+      const currentIndex = positions.indexOf(currentPosition);
+      const nextIndex = (currentIndex + 1) % positions.length;
+      const nextPosition = positions[nextIndex];
+
+      btn.classList.remove(currentPosition);
+      btn.classList.add(nextPosition);
+    }
+
+    // Fungsi login
+    btn.addEventListener('click', () => {
+      // Contoh validasi sederhana
+      if (uname.value === "cobain" && pass.value === "12345") {
+        // Simpan status login di localStorage
+        localStorage.setItem('isLoggedIn', 'true');
+        
+        // Redirect ke halaman utama setelah 1 detik
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1000);
+      } else {
+        errorMsg.style.display = 'block';
+        msg.style.display = 'none';
+        
+        // Reset form
+        uname.value = '';
+        pass.value = '';
+        checkInput();
+        
+        // Gerakkan tombol login
+        btn.classList.remove(...positions);
+        btn.classList.add('shift-right');
+      }
+    });
+
+    // Cek jika sudah login
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      window.location.href = 'gpt1.html';
+    }
+  </script>
+</body>
+</html>

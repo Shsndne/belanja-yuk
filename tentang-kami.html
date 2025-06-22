@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami - BelanjaYuk</title>
+    <style>
+        :root {
+            --hijau: #0E4839;
+            --putih: #FDFCE7;
+            --brightSun: #fcdb32;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Clash Grotesk", sans-serif;
+        }
+
+        body {
+            background-color: var(--hijau);
+            color: var(--putih);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--putih);
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+            color: var(--brightSun);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .about-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .about-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--putih);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .about-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .about-card {
+            background-color: rgba(253, 252, 231, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--brightSun);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .team-member {
+            background-color: rgba(253, 252, 231, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .member-name {
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .member-role {
+            color: var(--brightSun);
+            font-size: 14px;
+        }
+
+        .contact-button {
+            display: block;
+            width: fit-content;
+            margin: 40px auto 0;
+            padding: 12px 30px;
+            background-color: var(--brightSun);
+            color: var(--hijau);
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .contact-button:hover {
+            background-color: transparent;
+            color: var(--brightSun);
+            border: 2px solid var(--brightSun);
+        }
+
+        .footer {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: var(--putih);
+            text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">BelanjaYuk</div>
+        <a href="sendiri.html" class="back-button">
+            ← Kembali ke Beranda
+        </a>
+    </div>
+
+    <div class="about-container">
+        <h1 class="about-title">Tentang Kami</h1>
+        
+        <div class="about-content">
+            <div class="about-card">
+                <h2 class="card-title">Visi Kami</h2>
+                <p>Menjadi platform pencatat kebutuhan belanja yang andal, sederhana, dan dapat diakses oleh semua orang untuk membantu hidup lebih teratur dan efisien.</p>
+            </div>
+            
+            <div class="about-card">
+                <h2 class="card-title">Misi Kami</h2>
+                <p>Membantu pengguna mengatur dan menyimpan daftar kebutuhan dengan fitur yang simpel namun fungsional.</p>
+            </div>
+        </div>
+        
+        
+        <a href="#" class="contact-button">Hubungi Kami</a>
+    </div>
+
+    <div class="footer">
+        &copy; 2023 BelanjaYuk. All rights reserved.
+    </div>
+</body>
+</html>
